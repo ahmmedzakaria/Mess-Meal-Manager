@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context="com.example.ahmme.messmealcalculation.DialogActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:inputType="number"
+        android:layout_margin="2dp"
+        android:background="#ffffff"
+        android:id="@+id/totalBazar"
+        android:textSize="16sp"
+        android:hint="Total Bazar"
+        android:gravity="center"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:inputType="number"
+        android:layout_margin="2dp"
+        android:background="#ffffff"
+        android:id="@+id/totalExtra"
+        android:textSize="16sp"
+        android:hint="Total Extra"
+        android:gravity="center"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="2dp"
+
+        android:onClick="calculate"
+        android:textSize="16sp"
+        android:text="Calculate"
+        android:gravity="center"/>
+</LinearLayout>
