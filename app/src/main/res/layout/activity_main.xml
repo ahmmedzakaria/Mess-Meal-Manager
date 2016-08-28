@@ -3,133 +3,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
+    android:layout_gravity="center"
+    android:padding="4dp"
     android:orientation="vertical"
     android:background="@color/background"
+    android:id="@+id/linear_main_layour"
     tools:context="com.example.ahmme.messmealcalculation.MainActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#397F66"
-        android:orientation="horizontal"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:layout_marginBottom="1dp">
-        <LinearLayout
+        <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_margin="2dp"
             android:background="#ffffff"
-            android:orientation="vertical"
-            android:layout_margin="2dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="@dimen/OneDp"
-                android:padding="2dp"
-                android:background="#007F66"
-                android:textColor="#ffffff"
-                android:layout_weight="1"
-                android:textSize="@dimen/TextSize"
-                android:text="Name"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="@dimen/OneDp"
-                android:layout_marginRight="@dimen/OneDp"
-                android:layout_marginLeft="@dimen/OneDp"
-                android:padding="2dp"
-                android:background="#007F66"
-                android:textColor="@color/white"
-                android:layout_weight="1"
-                android:textSize="@dimen/TextSize"
-                android:text="Deposit"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="@dimen/OneDp"
-                android:layout_marginRight="@dimen/OneDp"
-                android:layout_marginLeft="@dimen/OneDp"
-                android:padding="2dp"
-                android:background="#007F66"
-                android:textColor="#ffffff"
-                android:layout_weight="1"
-                android:textSize="@dimen/TextSize"
-                android:text="Meal"
-                android:gravity="center"/>
-        </LinearLayout>
-        <LinearLayout
+            android:layout_weight="2"
+            android:id="@+id/name"
+            android:textSize="14sp"
+            android:hint="Name"
+            android:gravity="center"/>
+        <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:background="#ffffff"
+            android:layout_weight="1.5"
+            android:id="@+id/deposit"
+            android:hint="Diposit"
+            android:textSize="14sp"
+            android:gravity="center"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:inputType="numberDecimal"
+            android:background="#ffffff"
             android:layout_weight="1"
-            android:orientation="vertical">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="@dimen/OneDp"
-                android:background="@color/white"
-                android:layout_weight="1"
-                android:id="@+id/name"
-                android:textSize="@dimen/TextSize"
-                android:hint="Name"
-                android:gravity="center"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="@dimen/OneDp"
-                android:layout_marginRight="@dimen/OneDp"
-                android:layout_marginLeft="@dimen/OneDp"
-                android:background="#ffffff"
-                android:layout_weight="1"
-                android:id="@+id/deposit"
-                android:hint="Deposit"
-                android:textSize="@dimen/TextSize"
-                android:gravity="center"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_marginLeft="1dp"
-                android:background="#ffffff"
-                android:layout_weight="1"
-                android:id="@+id/meal"
-                android:textSize="@dimen/TextSize"
-                android:hint="Meal"
-                android:gravity="center"/>
-        </LinearLayout>
-
+            android:id="@+id/meal"
+            android:textSize="14sp"
+            android:hint="Mill"
+            android:gravity="center"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1.5"
+            android:background="@drawable/custom_button"
+            android:textSize="@dimen/TextSize"
+            android:textColor="@drawable/text_color"
+            android:text="Add"
+            android:id="@+id/add"
+            android:onClick="addToList"/>
     </LinearLayout>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_weight="1.5"
-        android:background="@drawable/custom_button"
-        android:textColor="#ededed"
-        android:textSize="@dimen/TextSize"
-        android:text="Add To List"
-        android:onClick="addToList"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="Calculate Meal"
-        android:layout_weight="1.5"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:textColor="#ededed"
-        android:background="@drawable/custom_button"
-        android:layout_gravity="bottom"
-        android:onClick="calculate"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:layout_marginBottom="2dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginBottom="1dp">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -149,7 +91,7 @@
             android:padding="3dp"
             android:layout_marginRight="1dp"
             android:textColor="#ffffff"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:textSize="@dimen/TextSize"
             android:text="Name"
             android:id="@+id/nameTv"
@@ -161,7 +103,7 @@
             android:padding="3dp"
             android:layout_marginRight="1dp"
             android:textColor="#ffffff"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:textSize="@dimen/TextSize"
             android:text="Diposit"
             android:id="@+id/dipositTv"
@@ -180,6 +122,7 @@
             android:gravity="center"/>
     </LinearLayout>
 
+
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
@@ -187,4 +130,16 @@
         android:layout_weight="8">
 
     </ListView>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Calculate Mill"
+        android:layout_weight="1.5"
+        android:textColor="@drawable/text_color"
+        android:textSize="@dimen/TextSize"
+        android:background="@drawable/custom_button"
+        android:layout_gravity="bottom"
+        android:onClick="calculate"/>
+
+
 </LinearLayout>

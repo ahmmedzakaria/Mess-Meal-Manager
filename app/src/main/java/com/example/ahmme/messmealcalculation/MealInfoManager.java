@@ -65,8 +65,8 @@ public class MealInfoManager {
             for (int i = 0; i < cursor.getCount(); i++) {
                 int id = cursor.getInt(cursor.getColumnIndex(DataBaseHelper.COL_ID));
                 String name = cursor.getString(cursor.getColumnIndex(DataBaseHelper.MESS_MEMBER_NAME));
-                double deposit = cursor.getDouble(cursor.getColumnIndex(DataBaseHelper.COL_DEPOSIT));
-                double meal = cursor.getDouble(cursor.getColumnIndex(DataBaseHelper.COL_MEAL));
+                float deposit = cursor.getFloat(cursor.getColumnIndex(DataBaseHelper.COL_DEPOSIT));
+                float meal = cursor.getFloat(cursor.getColumnIndex(DataBaseHelper.COL_MEAL));
 
                 MealInfo MealInfo = new MealInfo(id, name, deposit, meal);
                 contactList.add(MealInfo);
@@ -90,33 +90,33 @@ public class MealInfoManager {
 
         int columId = cursor.getInt(cursor.getColumnIndex(DataBaseHelper.COL_ID));
         String name = cursor.getString(cursor.getColumnIndex(DataBaseHelper.MESS_MEMBER_NAME));
-        double deposit = cursor.getDouble(cursor.getColumnIndex(DataBaseHelper.COL_DEPOSIT));
-        double meal = cursor.getDouble(cursor.getColumnIndex(DataBaseHelper.COL_MEAL));
+        float deposit = cursor.getFloat(cursor.getColumnIndex(DataBaseHelper.COL_DEPOSIT));
+        float meal = cursor.getFloat(cursor.getColumnIndex(DataBaseHelper.COL_MEAL));
 
-        MealInfo contact = new MealInfo(columId, name, meal, deposit);
+        MealInfo contact = new MealInfo(columId, name, deposit, meal);
         this.close();
         return contact;
     }
-    public double getMemberMealByID(int id) {
+    public float getMemberMealByID(int id) {
 
         this.open();
 
         Cursor cursor = database.query(DataBaseHelper.TABLE_MESS_MEAL, new String[]{DataBaseHelper.COL_MEAL},
                 DataBaseHelper.COL_ID + " = " + id, null, null, null, null);
         cursor.moveToFirst();
-        double meal = cursor.getDouble(cursor.getColumnIndex(DataBaseHelper.COL_MEAL));
+        float meal = cursor.getFloat(cursor.getColumnIndex(DataBaseHelper.COL_MEAL));
 
         this.close();
         return meal;
     }
-    public double getMemberDepositByID(int id) {
+    public float getMemberDepositByID(int id) {
 
         this.open();
 
         Cursor cursor = database.query(DataBaseHelper.TABLE_MESS_MEAL, new String[]{DataBaseHelper.COL_DEPOSIT},
                 DataBaseHelper.COL_ID + " = " + id, null, null, null, null);
         cursor.moveToFirst();
-        double deposit = cursor.getDouble(cursor.getColumnIndex(DataBaseHelper.COL_DEPOSIT));
+        float deposit = cursor.getFloat(cursor.getColumnIndex(DataBaseHelper.COL_DEPOSIT));
 
         this.close();
         return deposit;
@@ -131,14 +131,14 @@ public class MealInfoManager {
         return columId;
     }
 
-    public double getTotalMeal() {
+    public float getTotalMeal() {
         this.open();
         Cursor cursor = database.query(DataBaseHelper.TABLE_MESS_MEAL, new String[]{DataBaseHelper.COL_MEAL},
                 null, null, null, null, null);
         cursor.moveToFirst();
-        double totalMill=0.0;
+        float totalMill=0.0f;
         for (int i = 0; i < cursor.getCount(); i++) {
-            double meal = cursor.getDouble(cursor.getColumnIndex(DataBaseHelper.COL_MEAL));
+            float meal = cursor.getFloat(cursor.getColumnIndex(DataBaseHelper.COL_MEAL));
             totalMill+=meal;
             cursor.moveToNext();
         }
@@ -152,7 +152,6 @@ public class MealInfoManager {
         cv.put(DataBaseHelper.MESS_MEMBER_NAME, contact.getName());
         cv.put(DataBaseHelper.COL_DEPOSIT, contact.getDeposit());
         cv.put(DataBaseHelper.COL_MEAL, contact.getMeal());
-
 
         int updated = database.update(DataBaseHelper.TABLE_MESS_MEAL, cv, DataBaseHelper.COL_ID + " = " + id, null);
         this.close();
@@ -170,22 +169,102 @@ public class MealInfoManager {
             return true;
         } else return false;
     }
+    public boolean deleteMealInfo(int id) {
+        this.open();
+        int deleted = database.delete(DataBaseHelper.TABLE_MESS_MEAL, DataBaseHelper.COL_ID + " = " + id, null);
+        this.close();
+        if (deleted > 0) {
+            return true;
+        } else return false;
+
+    }
 
 
+    public MealInfo getBazarAndExtra(int id) {
+
+        this.open();
+
+        Cursor cursor = database.query(DataBaseHelper.TABLE_BAZAR_AND_EXTRA, new String[]{DataBaseHelper.COL_ID,
+                        DataBaseHelper.COL_TOTAL_BAZAR, DataBaseHelper.COL_TOTAL_EXTRA},
+                DataBaseHelper.COL_ID + " = " + id, null, null, null, null);
+        cursor.moveToFirst();
+
+        int columId = cursor.getInt(cursor.getColumnIndex(DataBaseHelper.COL_ID));
+        float totalBazar = cursor.getFloat(cursor.getColumnIndex(DataBaseHelper.COL_TOTAL_BAZAR));
+        float totalExtra = cursor.getFloat(cursor.getColumnIndex(DataBaseHelper.COL_TOTAL_EXTRA));
 
 
+        MealInfo contact = new MealInfo(columId, totalBazar, totalExtra);
+        this.close();
+        return contact;
+    }
 
-    public double getMillRet(){
-        double millRet= mealInfo.getTotalBazar()/getTotalMeal();
+    public boolean addBazarAndExtra(MealInfo contact) {
+
+        this.open();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataBaseHelper.COL_TOTAL_BAZAR, contact.getTotalBazar());
+        contentValues.put(DataBaseHelper.COL_TOTAL_EXTRA, contact.getTotalExtra());
+
+        long inserted = database.insert(DataBaseHelper.TABLE_BAZAR_AND_EXTRA, null, contentValues);
+        this.close();
+
+        database.close();
+
+        if (inserted > 0) {
+            return true;
+        } else return false;
+
+    }
+
+    public boolean updateBazarAndExtra(int id, MealInfo contact) {
+        this.open();
+        ContentValues cv = new ContentValues();
+        cv.put(DataBaseHelper.COL_TOTAL_BAZAR, contact.getTotalBazar());
+        cv.put(DataBaseHelper.COL_TOTAL_EXTRA, contact.getTotalExtra());
+
+        int updated = database.update(DataBaseHelper.TABLE_BAZAR_AND_EXTRA, cv, DataBaseHelper.COL_ID + " = " + id, null);
+        this.close();
+        if (updated > 0) {
+            return true;
+        } else
+            return false;
+    }
+
+    public int getTotalBazarExtraId() {
+        this.open();
+        Cursor cursor = database.query(DataBaseHelper.TABLE_BAZAR_AND_EXTRA, new String[]{DataBaseHelper.COL_ID},
+                null, null, null, null, null);
+        cursor.moveToLast();
+        int columId = cursor.getInt(cursor.getColumnIndex(DataBaseHelper.COL_ID));
+        this.close();
+        return columId;
+    }
+
+    public boolean deletBazarExtra() {
+        this.open();
+        int deleted = database.delete(DataBaseHelper.TABLE_BAZAR_AND_EXTRA,null,null);
+        this.close();
+        if (deleted > 0) {
+            return true;
+        } else return false;
+
+    }
+
+    public float getMillRet(){
+        float millRet= mealInfo.getTotalBazar()/getTotalMeal();
         return millRet;
     }
 
-    public double getMillCost(int id){
-        double millCost=getMemberMealByID(id)*getMillRet();
+    public float getMillCost(int id){
+        float millCost=getMemberMealByID(id)*getMillRet();
         return millCost;
     }
-    public double getRestMony(int id){
-        double restMony= getMemberDepositByID(id)-getMillCost(id);
+    public float getRestMony(int id){
+        float restMony= getMemberDepositByID(id)-getMillCost(id);
         return restMony;
     }
+
+
 }
